@@ -1,17 +1,28 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'EC2_PRIVATE_IP', defaultValue: '', description: 'Private IP of the EC2 instance')
+    }
+
     stages {
-        stage('Clone Repo') {
+        stage('Checkout App Repo') {
             steps {
                 git 'https://github.com/satya66655/flask-song-auto-update.git'
             }
         }
 
-        stage('Deploy to EC2') {
+        stage('Deploy Updated App') {
             steps {
-                sshagent(['ec2-user']) {
-                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@13.220.117.50 "cd flask-song-auto-update && ./deploy.sh"'
+                sshagent(['ec2-prod-key']) {
+                    sh """
+                    ssh -o StrictHostKeyChecking=no ec2-user@${params.EC2_PRIVATE_IP} '
+                        cd flask-song-auto-update || git clone https://github.com/satya66655/flask-song-auto-update.git && cd flask-song-auto-update
+                        git pull origin main
+                        chmod +x deploy.sh
+                        ./deploy.sh
+                    '
+                    """
                 }
             }
         }
