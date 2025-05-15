@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout App Repo') {
             steps {
-		git branch: 'main', url: 'https://github.com/satya66655/flask-song-auto-update.git'
+                git branch: 'main', url: 'https://github.com/satya66655/flask-song-auto-update.git'
             }
         }
 
@@ -16,12 +16,20 @@ pipeline {
             steps {
                 sshagent(['ec2-prod-key']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ec2-user@${params.EC2_PRIVATE_IP} '
-                        cd flask-song-auto-update || git clone https://github.com/satya66655/flask-song-auto-update.git && cd flask-song-auto-update
+                    ssh -o StrictHostKeyChecking=no ec2-user@${params.EC2_PRIVATE_IP} << 'ENDSSH'
+                        if [ ! -d "flask-song-auto-update" ]; then
+                            git clone https://github.com/satya66655/flask-song-auto-update.git
+                        fi
+
+                        cd flask-song-auto-update
+
+                        echo "[INFO] Pulling latest code..."
                         git pull origin main
+
+                        echo "[INFO] Running deploy.sh..."
                         chmod +x deploy.sh
                         ./deploy.sh
-                    '
+                    ENDSSH
                     """
                 }
             }
