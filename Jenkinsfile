@@ -16,7 +16,7 @@ pipeline {
             steps {
                 sshagent(['ec2-prod-key']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ec2-user@${params.EC2_PRIVATE_IP} "bash -c '
+                    ssh -o StrictHostKeyChecking=no ec2-user@${params.EC2_PRIVATE_IP} '
                         if [ ! -d flask-song-auto-update ]; then
                             git clone https://github.com/satya66655/flask-song-auto-update.git
                         fi
@@ -24,7 +24,7 @@ pipeline {
                         git pull origin main
                         chmod +x deploy.sh
                         ./deploy.sh
-                    '"
+                    '
                     """
                 }
             }
