@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+
+# OS/Editor files
+.DS_Store
+*.swp
+
+# Chrome & Selenium binaries
+chromedriver*
+*.zip
+*.rpm
+*.deb
+
+# Logs
+*.log
+nohup.out
+
+# Local test files (optional)
+selenium_test.py
+
+# Virtual environment (if used)
+venv/
+.env/
+
