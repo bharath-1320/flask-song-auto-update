@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout App Repo') {
             steps {
-                git 'https://github.com/satya66655/flask-song-auto-update.git'
+		git branch: 'main', url: 'https://github.com/satya66655/flask-song-auto-update.git'
             }
         }
 
