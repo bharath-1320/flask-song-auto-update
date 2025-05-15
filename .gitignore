@@ -17,7 +17,6 @@ chromedriver*
 nohup.out
 
 # Local test files (optional)
-selenium_test.py
 
 # Virtual environment (if used)
 venv/
