@@ -42,6 +42,11 @@ def rhyme():
             <p>How I wonder what you are!</p>
             <p>Up above the world so high,</p>
             <p>Like a diamond in the sky.</p>
+
+            <p>Twinkle Twinkle Little Star</p>
+            <p>How I wonder what you are!</p>
+            <p>Up above the world so high,</p>
+            <p>Like a diamond in the sky.</p>
         </div>
     </body>
     </html>
